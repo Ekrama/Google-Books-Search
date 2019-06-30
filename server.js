@@ -10,11 +10,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-  //app.use(express.static("client/build"));
+app.use(express.static("client/build"));
 }
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
-mongoose.connect(MONGODB_URI,{ useNewUrlParser: true });
+mongoose.connect(MONGODB_URI,{ useNewUrlParser: true })
+
+.then(() => { 
+  console.log( "🌎 ==> Successfully connected to mongoDB."); 
+}) 
+.catch((err) =>{ 
+  console.log(`Error connecting to mongoDB: ${err}`); 
+});
 
 // Define API routes here
 
